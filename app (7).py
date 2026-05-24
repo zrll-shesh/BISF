@@ -858,6 +858,12 @@ elif page == "Analisis Klaster":
     # normalize to 0-1 for radar
     def norm(val, mn, mx): return (val - mn) / (mx - mn)
 
+    FILL_COLORS = {
+        "#e05c5c": "rgba(224,92,92,0.15)",
+        "#e89c3a": "rgba(232,156,58,0.15)",
+        "#4db87a": "rgba(77,184,122,0.15)",
+    }
+
     fig_r = go.Figure()
     cluster_list = list(CLUSTER_DATA.items())
     for name, d in cluster_list:
@@ -871,7 +877,7 @@ elif page == "Analisis Klaster":
             r=vals + [vals[0]], theta=categories + [categories[0]],
             fill='toself', name=name.split("–")[1].strip(),
             line=dict(color=d["color"], width=2),
-            fillcolor=d["color"].replace(")", ",0.15)").replace("rgb", "rgba") if "rgb" in d["color"] else d["color"] + "28",
+            fillcolor=FILL_COLORS.get(d["color"], "rgba(200,200,200,0.15)"),
         ))
 
     dark_layout(fig_r, "Profil Klaster — Normalisasi Multi-Dimensi", 380)
